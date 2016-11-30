@@ -7,8 +7,8 @@ This module is intended to be installed in a python distribution which [lives so
 * To install, run ```pip install PyOriginTools```
 * To upgrade, run ```pip install --upgrade --no-cache-dir PyOriginTools```
 
-## PyOriginTools.ORIGIN
-PyOriginTools.ORIGIN is a class which provides a single layer of abstraction over the complicated (and inconsistent) Origin object model which aims to make most Origin tasks single-line python solutions. All python scripts you run should start like this:
+## Python Abstraction for PyOrigin
+PyOriginTools has Workbook, Worksheet, and Graph classes to provide a single layer of abstraction over the complicated (and often inconsistent) Origin object model which aims to make most Origin tasks single-line python solutions. Data is _always_ provided in native python and numpy data types (lists and dictionaries) and never obscure classes custom datatypes.
 
 ### Example 1: Getting the selected worksheet column names and data
 
