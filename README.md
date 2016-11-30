@@ -15,7 +15,7 @@ print("write the documentation") # I know, right?
 This module comes with an automatically generated HTML outline of PyOrigin.py functions, objects, and their properties. It also comes with inspection reports of common PyOrigin output objects (worksheetPages, worksheetPage, Column, etc.) generated with webinspect.
 
 ## Code Examples
-The OriginLab website has a few web pages which document PyOrigin in action. I supplement this information with an extensive flat-file python script which can be called from within origin (using `run -pyf "path/to/examples.py"`) that demonstrates many common tasks including:
+The OriginLab website has a few web pages which document PyOrigin in action. I supplement this information with [an extensive flat-file python script](docs/usage examples/examples.py) which can be called from within origin (using `run -pyf "path/to/examples.py"`) that demonstrates many common tasks including:
 * listing pages in a project (workbooks, graphs, etc.)
 * listing worksheets in workbooks
 * listing columns in worksheets
