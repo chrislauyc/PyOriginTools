@@ -16,20 +16,21 @@ PyOriginTools.ORIGIN is a class which provides a single layer of abstraction ove
 ```python
 import PyOrigin # <-- this module ships with OriginLab
 sheetObject=PyOrigin.ActiveLayer()
-columnNames=len([x.GetName() for x in sheetObject.Columns()])
+columnNames=[x.GetName() for x in sheetObject.Columns()]
 columnRows=max([x.GetUpperBound()+1 for x in sheetObject.Columns()])
 data=np.empty((columnRows,len(columnNames))) # quickly create array scaffold
 data[:]=np.nan # fill it with nans (representing unfilled original data)
 for colNum,colData in enumerate([x.GetData() for x in sheetObject.Columns()]):
     data[:len(colData),colNum]=colData
-print(data)
+print(columnNames) # list of short names for each column
+print(data) # 2D numpy array of all column data
 ```
 ####  Task _with_ PyOriginTools
 ```python
 import PyOriginTools.ORIGIN as OR # <-- this is the module you're reading about!
 sheet=OR.worksheet() # if the title of a worksheet isn't given, it uses the active one
-print(sheet.colNames)
-print(sheet.data)
+print(sheet.colNames) # list of short names for each column
+print(sheet.data) # 2D numpy array of all column data
 ```
 
 ## PyOrigin.py Documentation
