@@ -13,7 +13,7 @@ echo.
 echo    You are are about to UPLOAD version %version% to PyPi 
 echo.
 pause
-::python setup.py sdist upload_docs
+python setup.py sdist
 
 :: using "git" from the command line may require that you add the path to git.exe to your system path:
 :: C:\Users\swharden\AppData\Local\GitHub\PortableGit_d7effa1a4a322478cd29c826b52a0c118ad3db11\cmd\
@@ -26,6 +26,9 @@ pause
 git add --all
 git commit -m "PyPi build %version%"
 echo.
-echo DONE!
+echo DONE! GitHub Sync required.
 echo.
+
+:: launching the desktop client
+"C:\Users\swharden\AppData\Local\GitHub\GitHub.appref-ms"
 pause
