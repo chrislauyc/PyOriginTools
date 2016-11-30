@@ -14,7 +14,7 @@ setup(
     url='http://github.com/swharden/PyOriginTools',
     license='MIT License',
     platforms='any',
-    description='scripts and examples to simplify Python development for OriginLab using PyOrigin',
+    description='tools to simplify interaction with OriginLab using PyOrigin',
     long_description=open("README.md").readlines()[1],
     install_requires=[
        'swhlab>=0.1.113',
