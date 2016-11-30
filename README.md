@@ -3,12 +3,33 @@ PyOriginTools is a collection of scripts and examples intended to make life easi
 
 This module is intended to be installed in a python distribution which [lives somewhere Origin can see it](http://www.originlab.com/doc/LabTalk/guide/work-with-python#A_Note_to_Use_Python_Extensions). It utilizes tools such as numerical analysis tools such as numpy which do not ship with OriginLab.
 
-## PyOriginTools.ORIGIN
-PyOriginTools.ORIGIN is a class which provides a single layer of abstraction over the complicated (and inconsistent) Origin object model which aims to make most Origin tasks single-line python solutions. For example:
+## Installation
+* To install, run ```pip install PyOriginTools```
+* To upgrade, run ```pip install --upgrade --no-cache-dir PyOriginTools```
 
+## PyOriginTools.ORIGIN
+PyOriginTools.ORIGIN is a class which provides a single layer of abstraction over the complicated (and inconsistent) Origin object model which aims to make most Origin tasks single-line python solutions. All python scripts you run should start like this:
+
+### Example 1: Getting the selected worksheet column names and data
+
+#### Task without PyOriginTools (just stock PyOrigin)
 ```python
-import PyOrigin
-print("write the documentation") # I know, right?
+import PyOrigin # <-- this module ships with OriginLab
+sheetObject=PyOrigin.ActiveLayer()
+columnNames=len([x.GetName() for x in sheetObject.Columns()])
+columnRows=max([x.GetUpperBound()+1 for x in sheetObject.Columns()])
+data=np.empty((columnRows,len(columnNames))) # quickly create array scaffold
+data[:]=np.nan # fill it with nans (representing unfilled original data)
+for colNum,colData in enumerate([x.GetData() for x in sheetObject.Columns()]):
+    data[:len(colData),colNum]=colData
+print(data)
+```
+####  Task _with_ PyOriginTools
+```python
+import PyOriginTools.ORIGIN as OR # <-- this is the module you're reading about!
+book=OR.workbook() # no argument means use the active layer
+print(book.colNames)
+print(book.data)
 ```
 
 ## PyOrigin.py Documentation
