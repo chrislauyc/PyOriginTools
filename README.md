@@ -27,10 +27,10 @@ print(data) # 2D numpy array of all column data
 ```
 ####  Task _with_ PyOriginTools
 ```python
-import PyOriginTools.ORIGIN as OR # <-- this is the module you're reading about!
-sheet=OR.worksheet() # if the title of a worksheet isn't given, it uses the active one
-print(sheet.colNames) # list of short names for each column
-print(sheet.data) # 2D numpy array of all column data
+import PyOriginTools # <-- this module is what you're reading about!
+sheet=PyOriginTools.Sheet()
+print(sheet.colNames)
+print(sheet.data)
 ```
 
 ## PyOrigin.py Documentation
