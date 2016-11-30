@@ -1,4 +1,5 @@
 import os
+import sys
 
 def updateVersion(fname):
     """
@@ -24,6 +25,11 @@ def updateVersion(fname):
     with open(fname,'w') as f:
         f.write("\n".join(raw))
     print("upgraded version %d -> %d"%(version,version+1))
+    sys.path.insert(0,os.path.dirname(fname))
+    import version
+    print("New version:",version.__version__)
+    with open('version.txt','w') as f:
+        f.write(str(version.__version__))
 
 if __name__=='__main__':
     updateVersion('../PyOriginTools/version.py')
