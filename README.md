@@ -27,9 +27,9 @@ print(data)
 ####  Task _with_ PyOriginTools
 ```python
 import PyOriginTools.ORIGIN as OR # <-- this is the module you're reading about!
-book=OR.workbook() # if the title of a workbook isn't given as an argument, it uses the active one
-print(book.colNames)
-print(book.data)
+sheet=OR.worksheet() # if the title of a worksheet isn't given, it uses the active one
+print(sheet.colNames)
+print(sheet.data)
 ```
 
 ## PyOrigin.py Documentation
