@@ -9,7 +9,7 @@ Then save the command window output as output.txt
 
 Now run this script, and README.md will be created.
 (Actually, output.md will be created and combined with
-readme_top.md to yield README.md)
+the top and bottom readme to yield README.md)
 """
 
 def getCodeBlocks():
@@ -45,6 +45,5 @@ if __name__=="__main__":
         out+='**OriginLab Output:**'
         out+="\n```\n"+output[title]+"\n```\n"
     with open('README.md','w') as f:
-        f.write(out)
-    print(out)
+        f.write(out+open("readme_bottom.md").read())
     print("DONE")

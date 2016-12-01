@@ -1,7 +1,11 @@
 # PyOrigin Examples
 A demonstration of how I perform some of the most common tasks using PyOrigin. This readme file generated automatically by running all of the tests in [examples.py](examples.py), saving its output as [output.txt](output.txt), and generating this markdown-formatted summary page thanks to [convert.py](convert.py)
 
-## showPaths() ##
+# Starting Conditions
+```python
+import PyOrigin # always
+import numpy as np # if used
+```## showPaths() ##
 **Python:**
 ```python
 print("This is where Origin is looking when 'import' statements are used:")
@@ -502,3 +506,7 @@ PyOrigin.LT_execute("doc -uw;")
 ```
 refreshing the Origin window
 ```
+# Output
+If you run all these tests, the output will look something like this:
+
+![](output.png)
