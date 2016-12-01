@@ -48,5 +48,9 @@ The OriginLab website has a few web pages which document PyOrigin in action. I s
 * rearranging the order of worksheets
 * adding data to a worksheet (from numpy arrays)
 
+**Code and output are formatted nicely here:**
+
+http://pyorigin.swharden.com/PyOrigin-examples.html
+
 ## Useful Links
 * http://pyorigin.swharden.com/
