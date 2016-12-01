@@ -47,3 +47,6 @@ The OriginLab website has a few web pages which document PyOrigin in action. I s
 * deleting and creating worksheets
 * rearranging the order of worksheets
 * adding data to a worksheet (from numpy arrays)
+
+## Useful Links
+* http://pyorigin.swharden.com/
