@@ -6,3 +6,8 @@ A demonstration of how I perform some of the most common tasks using PyOrigin. T
 import PyOrigin # always
 import numpy as np # if used
 ```
+
+# Output
+If you run all these tests, the output will look something like this:
+
+![](output.png)

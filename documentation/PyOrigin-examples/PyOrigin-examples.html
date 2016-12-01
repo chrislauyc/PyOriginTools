@@ -1,20 +1,6 @@
-# PyOrigin Examples
-A demonstration of how I perform some of the most common tasks using PyOrigin. This readme file generated automatically by running all of the tests in [examples.py](examples.py), saving its output as [output.txt](output.txt), and generating this markdown-formatted summary page thanks to [convert.py](convert.py)
-
-# Starting Conditions
-```python
-import PyOrigin # always
-import numpy as np # if used
-```## showPaths() ##
-**Python:**
-```python
-print("This is where Origin is looking when 'import' statements are used:")
+<html><head><style>a {text-decoration: none;} a:hover{text-decoration: underline;} pre {white-space: pre-wrap;} .block{background-color: #DDDDFF; font-size: 200%; padding:10px; margin-top: 50px; margin-bottom: 10px;}</style></head><body><script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script><span style="font-weight: bold; font-size: 200%;">PyOrigin Example Code</span><br><i>see more at <a href="http://pyorigin.swharden.com/">PyOrigin.SWHarden.com</a></i><div class="block">showPaths()</div><div style="margin-left: 20px;"><b>Python Script:</b><pre class="prettyprint python" style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color:#FFFFFA">print("This is where Origin is looking when 'import' statements are used:")
 print("\n".join(sys.path))
-return
-```
-**OriginLab Output:**
-```
-This is where Origin is looking when 'import' statements are used:
+return</pre><b>OriginLab Output:</b><pre style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color: #FAFAFA;">This is where Origin is looking when 'import' statements are used:
 C:\Users\swharden\Documents\GitHub\python-OriginLab\originlab
 C:\Program Files\OriginLab\Origin2017\64bit\PyDLLs
 C:\Program Files\OriginLab\Origin2017\python35.zip
@@ -22,12 +8,7 @@ C:\Program Files\OriginLab\Origin2017\64bit\PyDLLs\python35.zip
 C:\Program Files\Python35\Lib
 C:\Program Files\Python35\DLLs
 C:\Program Files\OriginLab\Origin2017
-C:\Program Files\Python35\Lib\site-packages
-```
-## createBook() ##
-**Python:**
-```python
-print("starting by destroyold and old 'SWHdemo' books...")
+C:\Program Files\Python35\Lib\site-packages</pre></div><div class="block">createBook()</div><div style="margin-left: 20px;"><b>Python Script:</b><pre class="prettyprint python" style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color:#FFFFFA">print("starting by destroying old 'SWHdemo' books...")
 PyOrigin.DestroyPage('SWHdemo')
 print("now creating a 'SWHdemo' book from scratch...")
 worksheetPage=PyOrigin.CreatePage(2,"","Origin",1) # 2 means worksheet, 1 means not hidden
@@ -35,33 +16,15 @@ print("short name was:",worksheetPage.GetName()) # automatically assigned
 worksheetPage.SetName("SWHdemo")
 print("short name is now:",worksheetPage.GetName()) # must be unique
 worksheetPage.SetLongName("fancy pancy empty workbook") # doesn't have to be unique
-print("number of sheets:",worksheetPage.Layers().GetCount()) # 1 sheet = 1 layer?
-```
-**OriginLab Output:**
-```
-starting by destroyold and old 'SWHdemo' books...
+print("number of sheets:",worksheetPage.Layers().GetCount()) # 1 sheet = 1 layer?</pre><b>OriginLab Output:</b><pre style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color: #FAFAFA;">starting by destroying old 'SWHdemo' books...
 now creating a 'SWHdemo' book from scratch...
 short name was: Book2
 short name is now: SWHdemo
-number of sheets: 1
-```
-## addSheet() ##
-**Python:**
-```python
-page=PyOrigin.Pages('SWHdemo')
+number of sheets: 1</pre></div><div class="block">addSheet()</div><div style="margin-left: 20px;"><b>Python Script:</b><pre class="prettyprint python" style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color:#FFFFFA">page=PyOrigin.Pages('SWHdemo')
 sheet=page.AddLayer('SheetDemo') # creates sheet and returns it
 bookName,sheetName,sheetIndex=sheet.GetPage().GetName(),sheet.GetName(),sheet.GetIndex()
 print('created [{}]{} (index {})'.format(bookName,sheetName,sheetIndex))
-sheet.SetIndex(0) # moves this sheet to the front
-```
-**OriginLab Output:**
-```
-created [SWHdemo]SheetDemo (index 1)
-```
-## populateSheet() ##
-**Python:**
-```python
-worksheetPage=PyOrigin.WorksheetPages("SWHdemo") # this is the workbook name
+sheet.SetIndex(0) # moves this sheet to the front</pre><b>OriginLab Output:</b><pre style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color: #FAFAFA;">created [SWHdemo]SheetDemo (index 1)</pre></div><div class="block">populateSheet()</div><div style="margin-left: 20px;"><b>Python Script:</b><pre class="prettyprint python" style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color:#FFFFFA">worksheetPage=PyOrigin.WorksheetPages("SWHdemo") # this is the workbook name
 worksheetPage.SetLongName("dummy data") # doesn't have to be unique
 firstSheet=worksheetPage.Layers(0) #CPyWorksheet
 # add and delete columns
@@ -89,11 +52,7 @@ for colNum,columnObject in enumerate(firstSheet.Columns()):
 # modifying rows works the same way
 for i in range(5):
     print("deleting row",10+i)
-    firstSheet.DeleteRow(10) # position
-```
-**OriginLab Output:**
-```
-number of columns before: 2
+    firstSheet.DeleteRow(10) # position</pre><b>OriginLab Output:</b><pre style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color: #FAFAFA;">number of columns before: 2
   adding a column: "SWH" at position 1...
   adding a column: "SWH" at position 1...
   adding a column: "SWH" at position 1...
@@ -163,88 +122,38 @@ deleting row 10
 deleting row 11
 deleting row 12
 deleting row 13
-deleting row 14
-```
-## inspect_workbooks() ##
-**Python:**
-```python
-print("gives details for all workbooks in the project")
+deleting row 14</pre></div><div class="block">inspect_workbooks()</div><div style="margin-left: 20px;"><b>Python Script:</b><pre class="prettyprint python" style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color:#FFFFFA">print("gives details for all workbooks in the project")
 print("Worksheet Pages:")
-print("\n".join(["  "+page.GetName() for page in PyOrigin.WorksheetPages()]))
-```
-**OriginLab Output:**
-```
-gives details for all workbooks in the project
+print("\n".join(["  "+page.GetName() for page in PyOrigin.WorksheetPages()]))</pre><b>OriginLab Output:</b><pre style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color: #FAFAFA;">gives details for all workbooks in the project
 Worksheet Pages:
   Book1
-  SWHdemo
-```
-## inspect_graphs() ##
-**Python:**
-```python
-print("gives details for all graphs in the project")
+  SWHdemo</pre></div><div class="block">inspect_graphs()</div><div style="margin-left: 20px;"><b>Python Script:</b><pre class="prettyprint python" style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color:#FFFFFA">print("gives details for all graphs in the project")
 print("(there may not be any!)")
 for page in PyOrigin.GraphPages():
-    print(page.GetFolder(),page.GetName())
-```
-**OriginLab Output:**
-```
-gives details for all graphs in the project
-(there may not be any!)
-```
-## inspect_pages() ##
-**Python:**
-```python
-print("gives details for all pages (graphs and worksheets) in the project")
+    print(page.GetFolder(),page.GetName())</pre><b>OriginLab Output:</b><pre style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color: #FAFAFA;">gives details for all graphs in the project
+(there may not be any!)</pre></div><div class="block">inspect_pages()</div><div style="margin-left: 20px;"><b>Python Script:</b><pre class="prettyprint python" style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color:#FFFFFA">print("gives details for all pages (graphs and worksheets) in the project")
 for page in PyOrigin.GraphPages():
-    print("Type: {} Name: {}".format(page.GetType(),page.GetName()))
-```
-**OriginLab Output:**
-```
-gives details for all pages (graphs and worksheets) in the project
-```
-## list_pages() ##
-**Python:**
-```python
-print("listing all pages (graphs and worksheets) in the project by their name")
+    print("Type: {} Name: {}".format(page.GetType(),page.GetName()))</pre><b>OriginLab Output:</b><pre style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color: #FAFAFA;">gives details for all pages (graphs and worksheets) in the project</pre></div><div class="block">list_pages()</div><div style="margin-left: 20px;"><b>Python Script:</b><pre class="prettyprint python" style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color:#FFFFFA">print("listing all pages (graphs and worksheets) in the project by their name")
 pages_all=[x.GetName() for x in PyOrigin.Pages()]
 pages_worksheets=[x.GetName() for x in PyOrigin.Pages() if x.GetType()==2]
 pages_graph=[x.GetName() for x in PyOrigin.Pages() if x.GetType()==3]
 print("PAGES:",pages_all)
 print("WORKSHEETS:",pages_worksheets)
-print("GRAPHS:",pages_graph)
-```
-**OriginLab Output:**
-```
-listing all pages (graphs and worksheets) in the project by their name
+print("GRAPHS:",pages_graph)</pre><b>OriginLab Output:</b><pre style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color: #FAFAFA;">listing all pages (graphs and worksheets) in the project by their name
 PAGES: ['Book1', 'SWHdemo']
 WORKSHEETS: ['Book1', 'SWHdemo']
-GRAPHS: []
-```
-## active() ##
-**Python:**
-```python
-print("showing basics about what's active.")
+GRAPHS: []</pre></div><div class="block">active()</div><div style="margin-left: 20px;"><b>Python Script:</b><pre class="prettyprint python" style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color:#FFFFFA">print("showing basics about what's active.")
 print("PyOrigin.ActiveFolder():",PyOrigin.ActiveFolder())
 print("PyOrigin.ActiveFolder().Path():",PyOrigin.ActiveFolder().Path())
 print("PyOrigin.ActiveLayer():",PyOrigin.ActiveLayer())
 try:
     print("PyOrigin.ActivePage():",PyOrigin.ActivePage())
 except:
-    print("PyOrigin.ActivePage(): CRASHED!!!! Does that when notes are selected.")
-```
-**OriginLab Output:**
-```
-showing basics about what's active.
+    print("PyOrigin.ActivePage(): CRASHED!!!! Does that when notes are selected.")</pre><b>OriginLab Output:</b><pre style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color: #FAFAFA;">showing basics about what's active.
 PyOrigin.ActiveFolder(): Folder1
 PyOrigin.ActiveFolder().Path(): /UNTITLED/Folder1/
 PyOrigin.ActiveLayer(): SheetDemo
-PyOrigin.ActivePage(): SWHdemo
-```
-## list_workbook_sheets() ##
-**Python:**
-```python
-print("selecting a worksheet page by its name")
+PyOrigin.ActivePage(): SWHdemo</pre></div><div class="block">list_workbook_sheets()</div><div style="margin-left: 20px;"><b>Python Script:</b><pre class="prettyprint python" style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color:#FFFFFA">print("selecting a worksheet page by its name")
 # find names of workbooks so we can select one by name
 worksheetNames=[x.GetName() for x in PyOrigin.WorksheetPages()]
 print("workbooks available (oldest to newest):",worksheetNames)
@@ -256,20 +165,11 @@ workbook=PyOrigin.WorksheetPages(workbookName)
 sheetNames=[x.GetName() for x in workbook.Layers()]
 print("found %d sheets:"%len(sheetNames))
 for i,worksheetName in enumerate(sheetNames):
-    print('PyOrigin.WorksheetPages("{}").Layers({}) will select {} sheet'.format(workbookName,i,worksheetName))
-```
-**OriginLab Output:**
-```
-selecting a worksheet page by its name
+    print('PyOrigin.WorksheetPages("{}").Layers({}) will select {} sheet'.format(workbookName,i,worksheetName))</pre><b>OriginLab Output:</b><pre style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color: #FAFAFA;">selecting a worksheet page by its name
 workbooks available (oldest to newest): ['Book1', 'SWHdemo']
 selecting oldest workbook by its name: "Book1"
 found 1 sheets:
-PyOrigin.WorksheetPages("Book1").Layers(0) will select Sheet1 sheet
-```
-## active_worksheet_info() ##
-**Python:**
-```python
-print("showing info on the currently selected sheet of the active workbook")
+PyOrigin.WorksheetPages("Book1").Layers(0) will select Sheet1 sheet</pre></div><div class="block">active_worksheet_info()</div><div style="margin-left: 20px;"><b>Python Script:</b><pre class="prettyprint python" style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color:#FFFFFA">print("showing info on the currently selected sheet of the active workbook")
 # figure out the last selected book/sheet
 # note that these stay "active" even if note objects are selected.
 print("This page name is:",PyOrigin.ActiveLayer().GetPage())
@@ -299,11 +199,7 @@ print("column short names:",columnSNs)
 print("column long names:",columnLNs)
 print("column types:",columnTypes2)
 print("column data lengths:",columnDataLengths)
-print("the last column contains data:",columnData[-1])
-```
-**OriginLab Output:**
-```
-showing info on the currently selected sheet of the active workbook
+print("the last column contains data:",columnData[-1])</pre><b>OriginLab Output:</b><pre style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color: #FAFAFA;">showing info on the currently selected sheet of the active workbook
 This page name is: SWHdemo
 This page type is: 2
 active book: "SWHdemo"
@@ -313,12 +209,7 @@ column short names: ['Scott0', 'Scott1', 'Scott2', 'Scott3', 'Scott4', 'Scott5',
 column long names: ['neuron 0', 'neuron 1', 'neuron 2', 'neuron 3', 'neuron 4', 'neuron 5', 'neuron 6']
 column types: [X, Y, Y, Y, Y, Y, Y]
 column data lengths: [45, 45, 45, 45, 45, 45, 45]
-the last column contains data: [0.33, 7.78, 14.7, 21.47, 28.12, 35.83, 42.07, 49.65, 56.11, 63.65, 105.78, 112.91, 119.71, 126.47, 133.06, 140.85, 147.61, 154.32, 161.55, 168.44, 176.0, 182.15, 189.73, 196.24, 203.37, 210.45, 217.35, 224.81, 231.6, 238.94, 245.31, 252.89, 260.0, 266.09, 273.17, 280.06, 287.06, 294.78, 301.86, 308.43, 315.39, 322.41, 329.6, 336.36, 343.39]
-```
-## active_worksheet_data_numpy() ##
-**Python:**
-```python
-print("convertinng data of the selected worksheet to a 2D numpy array")
+the last column contains data: [0.33, 7.78, 14.7, 21.47, 28.12, 35.83, 42.07, 49.65, 56.11, 63.65, 105.78, 112.91, 119.71, 126.47, 133.06, 140.85, 147.61, 154.32, 161.55, 168.44, 176.0, 182.15, 189.73, 196.24, 203.37, 210.45, 217.35, 224.81, 231.6, 238.94, 245.31, 252.89, 260.0, 266.09, 273.17, 280.06, 287.06, 294.78, 301.86, 308.43, 315.39, 322.41, 329.6, 336.36, 343.39]</pre></div><div class="block">active_worksheet_data_numpy()</div><div style="margin-left: 20px;"><b>Python Script:</b><pre class="prettyprint python" style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color:#FFFFFA">print("convertinng data of the selected worksheet to a 2D numpy array")
 if not PyOrigin.ActiveLayer().GetPage().GetType()==2:
     print("a worksheet should be selected! aborting.")
     return
@@ -349,11 +240,7 @@ for row in range(data.shape[0]):
     if row<5:
         for col in range(data.shape[1]):
             print("{:>7.02f}\t".format(data[row,col]),end="") # no end line break
-        print() # force end line break after each row
-```
-**OriginLab Output:**
-```
-convertinng data of the selected worksheet to a 2D numpy array
+        print() # force end line break after each row</pre><b>OriginLab Output:</b><pre style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color: #FAFAFA;">convertinng data of the selected worksheet to a 2D numpy array
 WARNING: this may crash if you have letters in your document.
 
 
@@ -493,20 +380,6 @@ Printing line by (x,y) coordinates (to row 5):
    1.21	   2.31	   3.45	   4.29	   5.82	   6.87	   7.78	
    2.18	   4.47	   6.26	   8.84	  10.08	  12.83	  14.70	
    3.31	   6.25	   9.97	  12.37	  15.24	  18.10	  21.47	
-   4.57	   8.39	  12.43	  16.02	  20.96	  24.64	  28.12	
-```
-## redrawScreen() ##
-**Python:**
-```python
-print("refreshing the Origin window")
+   4.57	   8.39	  12.43	  16.02	  20.96	  24.64	  28.12	</pre></div><div class="block">redrawScreen()</div><div style="margin-left: 20px;"><b>Python Script:</b><pre class="prettyprint python" style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color:#FFFFFA">print("refreshing the Origin window")
 #TODO: is there a PyOrigin way to do this?
-PyOrigin.LT_execute("doc -uw;")
-```
-**OriginLab Output:**
-```
-refreshing the Origin window
-```
-# Output
-If you run all these tests, the output will look something like this:
-
-![](output.png)
+PyOrigin.LT_execute("doc -uw;")</pre><b>OriginLab Output:</b><pre style="border: 1px solid #CCC; padding: 5px; margin: 10px; background-color: #FAFAFA;">refreshing the Origin window</pre></div></body></html>

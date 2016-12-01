@@ -44,6 +44,6 @@ if __name__=="__main__":
         out+="\n```python\n"+code[title]+"\n```\n"
         out+='**OriginLab Output:**'
         out+="\n```\n"+output[title]+"\n```\n"
-    with open('README.md','w') as f:
+    with open('README_AUTOMATIC.md','w') as f:
         f.write(out+open("readme_bottom.md").read())
     print("DONE")
