@@ -17,7 +17,7 @@ python setup.py sdist upload
 echo.
 echo   Now uploading documentation...
 echo.
-python setup.py upload_docs --upload-dir=docs/html
+::python setup.py upload_docs --upload-dir=docs/html
 
 :: using "git" from the command line may require that you add the path to git.exe to your system path:
 :: C:\Users\swharden\AppData\Local\GitHub\PortableGit_d7effa1a4a322478cd29c826b52a0c118ad3db11\cmd\
