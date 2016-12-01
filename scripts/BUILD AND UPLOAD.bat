@@ -51,13 +51,13 @@ pip install --upgrade --no-cache-dir %moduleName%
 
 
 
-echo.
-echo   ###################################
-echo   ### CREATING AND UPLOADING DOCS ###
-echo   ###################################
-echo.
-Timeout /t 3 /nobreak
-python setup.py sdist upload_docs
+::echo.
+::echo   ###################################
+::echo   ### CREATING AND UPLOADING DOCS ###
+::echo   ###################################
+::echo.
+::Timeout /t 3 /nobreak
+::python setup.py sdist upload_docs
 
 
 

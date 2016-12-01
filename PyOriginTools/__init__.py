@@ -1,1 +1,1 @@
-from version import __version__
+from PyOriginTools.version import __version__
