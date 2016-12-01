@@ -33,6 +33,8 @@ print(sheet.colNames)
 print(sheet.data)
 ```
 
+For more, check out the section on [API design](documentation/API-design)
+
 ## PyOrigin.py Documentation
 This module comes with an automatically generated HTML outline of PyOrigin.py functions, objects, and their properties. It also comes with inspection reports of common PyOrigin output objects (worksheetPages, worksheetPage, Column, etc.) generated with webinspect.
 
