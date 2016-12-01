@@ -67,6 +67,8 @@ demoSheet.transferToOrigin("FruityBook","Sheet1",overwrite=True) # to push it ba
 ```python
 demoBook=OR.Book("FruityBook",pull=True) # if we didn't set pull as True, we would be creating one from scratch
 demoBook.sheets[0].data[2,3]=1234 # from the first sheet, set the value of a cell (row 2, column 3)
+demoBook.addSheet("blankSheet") # let's add a new sheet to the end of the workbook
+demobook.sheets[-1].cols=["some","new","data","columns"] # make the new (last) sheet interesting
 demoBook.transferToOrigin("FruityBook",overwrite=True) # to push it back into Origin overwriting the original
 ```
 
@@ -106,7 +108,10 @@ sheet3.data[3,2]=None # make a single cell of sheet 3 empty
 
 # now it's time to create our workbook!
 demoBook=OR.Book("FruityBook",sheets=[sheet1, sheet2]) # initiate with 2 sheets
-demoBook.addSheet(sheet3) # demonstrate how to add a sheet
+demoBook.
+
+
+(sheet3) # demonstrate how to add a sheet
 demoBook.moveSheet(-1,0) # move the last sheet to the first spot
 
 demoBook.transferToOrigin(overwrite=True) # communicates with PyOrigin to create/fill this book.
