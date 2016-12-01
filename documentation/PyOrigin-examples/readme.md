@@ -3,6 +3,7 @@ A demonstration of how I perform some of the most common tasks using PyOrigin. T
 
 ## HTML Rendering of Code and Output
 http://pyorigin.swharden.com/PyOrigin-examples.html
+
 _check out that link! It's where all the magic lives_
 
 ## Starting Conditions
