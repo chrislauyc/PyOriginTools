@@ -32,5 +32,4 @@ def updateVersion(fname):
         f.write(str(version.__version__))
 
 if __name__=='__main__':
-    moduleName=open('moduleName.txt').read().strip()
-    updateVersion('../%s/version.py'%moduleName)
+    updateVersion('../PyOriginTools/version.py')
