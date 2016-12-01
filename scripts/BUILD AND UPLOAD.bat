@@ -14,9 +14,16 @@ echo    You are are about to UPLOAD version %version% to PyPi
 echo.
 pause
 python setup.py sdist upload
+pause
+
 echo.
-echo   Now uploading documentation...
+echo    Now let's use pip to install the latest version...
 echo.
+pip install --upgrade --no-cache-dir PyOriginTools
+
+::echo.
+::echo   Now uploading documentation...
+::echo.
 ::python setup.py upload_docs --upload-dir=docs/html
 
 :: using "git" from the command line may require that you add the path to git.exe to your system path:
