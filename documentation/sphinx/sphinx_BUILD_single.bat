@@ -1,0 +1,1 @@
+make singlehtml && _build\singlehtml\index.html && pause
