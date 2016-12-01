@@ -30,5 +30,5 @@ echo DONE! GitHub Sync required.
 echo.
 
 :: launching the desktop client
-"C:\Users\swharden\AppData\Local\GitHub\GitHub.appref-ms"
+::"C:\Users\swharden\AppData\Local\GitHub\GitHub.appref-ms"
 pause
