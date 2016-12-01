@@ -36,21 +36,38 @@ OR.notes() # return the names of all notes
 # Pulling data from Origin
 Most of what we are trying to do is read data from worksheets. We can acquire data directly from a worksheet (or workbook of worksheets), or by pulling in an entire workbook. In both cases, we can pull in either the active workbook/worksheet, or one defined by name.
 
-## Pulling a whole workbook
-```python
-demoBook=OR.Book("FruityBook",pull=True) # if we didn't set pull as True, we would be creating one from scratch
-print("Book: {} has {} sheets".format(demoBook.name,len(demoBook.sheets))
-firstSheet=demoBook.sheets[0] # let's look at the first sheet in the workbook
-print(firstSheet.cols) # prints the names of every column in the sheet
-print(firstSheet.data) # this prints the numpy array of all data contained within
-```
-
 ## Pulling a single worksheet
 This is almost identical, except we can assign a sheet directly by bookName/sheetName:
 ```python
 demoSheet=OR.Sheet("FruityBook","Sheet1") # pull a sheet by its bookName/sheetName
+print('The first sheet "{}" has {} sheets').format(demoSheet.name,len(demoSheet.cols))
 print(demoSheet.cols) # prints the names of every column in the sheet
 print(demoSheet.data) # this prints the numpy array of all data contained within
+```
+
+## Pulling a whole workbook
+```python
+demoBook=OR.Book("FruityBook",pull=True) # if we didn't set pull as True, we would be creating one from scratch
+print('The book "{}" has {} sheets').format(demoBook.name,len(demoBook.sheets))
+firstSheet=demoBook.sheets[0] # let's look at the first sheet in the workbook
+print('The first sheet "{}" has {} sheets').format(firstSheet.name,len(firstSheet.cols))
+print(firstSheet.name,"has",len(demoBook.sheets),"sheets")
+print(firstSheet.cols) # prints the names of every column in the sheet
+print(firstSheet.data) # this prints the numpy array of all data contained within
+```
+
+## Modifying a worksheet and pushing it back to Origin
+```python
+demoSheet=OR.Sheet("FruityBook","Sheet1") # pull a sheet by its bookName/sheetName
+demoSheet.data[2,3]=1234 # set the value of a cell (row 2, column 3)
+demoSheet.transferToOrigin("FruityBook","Sheet1",overwrite=True) # to push it back into Origin
+```
+
+## Modifying a workbook and pushing it back to Origin
+```python
+demoBook=OR.Book("FruityBook",pull=True) # if we didn't set pull as True, we would be creating one from scratch
+demoBook.sheets[0].data[2,3]=1234 # from the first sheet, set the value of a cell (row 2, column 3)
+demoBook.transferToOrigin("FruityBook",overwrite=True) # to push it back into Origin overwriting the original
 ```
 
 # Pushing data to Origin
