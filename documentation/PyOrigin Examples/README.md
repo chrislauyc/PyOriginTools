@@ -1,12 +1,14 @@
+# PyOrigin Examples
+A demonstration of how I perform some of the most common tasks using PyOrigin. This readme file generated automatically by running all of the tests in [examples.py](examples.py), saving its output as [output.txt](output.txt), and generating this markdown-formatted summary page thanks to [convert.py](convert.py)
 
+## demo_000_showPaths() ##
+**Python:**
 ```python
-def demo_000_showPaths():
-    print("This is where Origin is looking when 'import' statements are used:")
-    print("\n".join(sys.path))
-    return
+print("This is where Origin is looking when 'import' statements are used:")
+print("\n".join(sys.path))
+return
 ```
-
-Output:
+**OriginLab Output:**
 ```
 This is where Origin is looking when 'import' statements are used:
 C:\Users\swharden\Documents\GitHub\python-OriginLab\originlab
