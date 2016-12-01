@@ -10,3 +10,8 @@ dist
 .tox
 build
 *.bak
+
+dist
+_static
+_templates
+*.egg-info
