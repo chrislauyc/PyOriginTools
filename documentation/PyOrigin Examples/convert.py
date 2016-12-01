@@ -30,7 +30,8 @@ def getOutputBlocks():
     d={}
     for block in raw.split("\n####### ")[1:]:
         title=block.split("\n")[0].split("(")[0]
-        d[title]=block.split("\n",1)[1].strip()
+        block=block.split("\n",1)[1].strip()
+        d[title]=block.split("\nfinished in ")[0]
     return d
 
 if __name__=="__main__":
@@ -38,12 +39,11 @@ if __name__=="__main__":
     output=getOutputBlocks()
     out=open("readme_top.md").read()
     for title in sorted(code.keys()):
-        out+='## {}() ##\n'.format(title)
+        out+='## {}() ##\n'.format(title.split("_",2)[-1])
         out+='**Python:**'
         out+="\n```python\n"+code[title]+"\n```\n"
         out+='**OriginLab Output:**'
         out+="\n```\n"+output[title]+"\n```\n"
-        break
     with open('README.md','w') as f:
         f.write(out)
     print(out)
