@@ -41,6 +41,7 @@ OR.notes() # return the names of all notes
 To create something from scratch, we could do one of two things:
  1. create an empty book, create sheets, and add sheets into that book
  2. create sheets, add those sheets into a book
+ 
 Although it feels backwards, #2 seems simpler, so I'm going to go with it. In general, create a sheet before you determine what book to insert it into (including a book which may need to be created)
 
 In this demo we will create a worksheet with some fruity data, then create several similar worksheets from this same staring point, and push it all into a workbook ("fruityBook") in Origin. Note that all of this occurs in Python memory until the very last line, when it interacts with Origin
