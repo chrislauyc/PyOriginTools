@@ -47,13 +47,32 @@ Although it feels backwards, #2 seems simpler, so I'm going to go with it. In ge
 ## Creating worksheets and workbooks from scratch
 In this demo we will create a worksheet with some fruity data, then create several similar worksheets from this same staring point, and push it all into a workbook ("fruityBook") in Origin. Note that all of this occurs in Python memory until the very last line, when it interacts with Origin
 ```python
-# first create a sheet
-startingSheet=OR.Sheet(cols=["time","apples","oranges","pears"],units=["seconds","grams","grams","grams"])
+# this line shows how to initiate a worksheet with everything we need in one line
+sheet1=OR.Sheet("sheet1",cols=["time","apples","oranges","pears"],units=["seconds","grams","grams","grams"])
+sheet1.data=np.random.random_sample((10,3))*10 # random values (10 rows, 3 columns)
 
+# we can copy the sheet so we can mess around with it
+sheet2=copy(sheet1) # remember that without copy() we would be messing with the original
+sheet2.name="sheet2"
+sheet2.units[0]="minutes"
+sheet2.cols[1]="granny smith"
+sheet2.data=np.sqrt(sheet2.data)
+sheet2.comments=["comment one","comment two","comment three"]
+sheet2.data=sheet2.data*1000
 
-#demoBook=OR.Book("FruityBook") # creates a workbook only in memory
-#demoBook.addSheet("SheetOne",)
-#demoSheet=demoBook
-#demoBook.data=np.random.random_sample((10,3))*10 # random values (10 rows, 3 columns)
-#demoBook.transferToOrigin() # communicates with PyOrigin to create/fill this book.
+# let's make sheet3 nothing but values '123'
+sheet3=copy(sheet1)
+sheet3.name="sheet3"
+sheet3.units=None # untits will be blank
+sheet3.comments=None # comments will be blank
+sheet3.cols=[x.upper() for x in sheet3.cols] # make every name uppercase
+sheet3.data=np.round(np.sqrt(sheet3.data),1) # round the sqrt to 1 decimal place
+sheet3.data[3,2]=None # make a single cell of sheet 3 empty
+
+# now it's time to create our workbook!
+demoBook=OR.Book("FruityBook",sheets=[sheet1, sheet2]) # initiate with 2 sheets
+demoBook.addSheet(sheet3) # demonstrate how to add a sheet
+demoBook.moveSheet(-1,0) # move the last sheet to the first spot
+
+demoBook.transferToOrigin(overwrite=True) # communicates with PyOrigin to create/fill this book.
 ```
