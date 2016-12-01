@@ -33,14 +33,32 @@ OR.graphs() # return the names of all workbooks
 OR.notes() # return the names of all notes
 ```
 
-## Inspecting workbooks
+# Pulling data from Origin
+Most of what we are trying to do is read data from worksheets. We can acquire data directly from a worksheet (or workbook of worksheets), or by pulling in an entire workbook. In both cases, we can pull in either the active workbook/worksheet, or one defined by name.
 
-## Getting data from worksheets
+## Pulling a whole workbook
+```python
+demoBook=OR.Book("FruityBook",pull=True) # if we didn't set pull as True, we would be creating one from scratch
+print("Book: {} has {} sheets".format(demoBook.name,len(demoBook.sheets))
+firstSheet=demoBook.sheets[0] # let's look at the first sheet in the workbook
+print(firstSheet.cols) # prints the names of every column in the sheet
+print(firstSheet.data) # this prints the numpy array of all data contained within
+```
+
+## Pulling a single worksheet
+This is almost identical, except we can assign a sheet directly by bookName/sheetName:
+```python
+demoSheet=OR.Sheet("FruityBook","Sheet1") # pull a sheet by its bookName/sheetName
+print(demoSheet.cols) # prints the names of every column in the sheet
+print(demoSheet.data) # this prints the numpy array of all data contained within
+```
+
+# Pushing data to Origin
 
 ## Create new worksheets before workbooks
 To create something from scratch, we could do one of two things:
- 1. create an empty book, create sheets, and add sheets into that book
- 2. create sheets, add those sheets into a book
+ 1. create an empty book, create sheets, and add sheets into that book, then push to Origin
+ 2. create sheets, add those sheets into a book, then push to Origin
  
 Although it feels backwards, #2 seems simpler, so I'm going to go with it. In general, create a sheet before you determine what book to insert it into (including a book which may need to be created)
 
