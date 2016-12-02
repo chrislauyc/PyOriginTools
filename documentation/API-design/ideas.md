@@ -14,7 +14,7 @@ What is the difference between a workbook and a worksheet? I still can't figure 
 |path|_object_.path|_object_.GetParent().GetFolder()|
 
 ## Importing PyOrigin and/or PyOriginTools
-PyOriginTools is intended to serve as a logical, consistent, and well-documented layer between you and PyOrigin. Optimally you will never need to import PyOrigin and interact with it directly. If you do with to do this, you can always import PyOrigin and PyOriginTools in the same script and use your favorite features of each. 
+PyOriginTools is intended to serve as a logical, consistent, and well-documented layer between you and PyOrigin. Optimally you will never need to import PyOrigin and interact with it directly. If you do wish to do this, you can always import PyOrigin and PyOriginTools in the same script and use your favorite features of each. 
 
 To save keystrokes, I import PyOriginTools as OR:
 ```python
