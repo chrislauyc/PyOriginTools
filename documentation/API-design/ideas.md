@@ -108,11 +108,7 @@ sheet3.data[3,2]=None # make a single cell of sheet 3 empty
 
 # now it's time to create our workbook!
 demoBook=OR.Book("FruityBook",sheets=[sheet1, sheet2]) # initiate with 2 sheets
-demoBook.
-
-
-(sheet3) # demonstrate how to add a sheet
+demoBook.addSheet(sheet3) # demonstrate how to add a sheet
 demoBook.moveSheet(-1,0) # move the last sheet to the first spot
-
 demoBook.transferToOrigin(overwrite=True) # communicates with PyOrigin to create/fill this book.
 ```
