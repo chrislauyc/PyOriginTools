@@ -23,66 +23,84 @@ import webinspect
 import time
 import numpy as np
 
-class BOOK:
-    def __init__(self,name=None):
-        """
-        create an OR.BOOK object to play with.
-
-        Args:
-            shortName (str): the short name of the book. If this does
-                not exist in the project, it will be created. If this
-                does exist, it will pull data from the project book
-        """
-        if not name:
-            self.name="B"+str(int(time.time()))[-7:]
-
 class SHEET:
-    def __init__(self,pullBook=None,pullSheet=None):
+    def __init__(self,bookName=None,sheetName=None,pull=True):
         """
         create an OR.SHEET object to play with.
+        If that book/sheet already exist, the data will be pulled automatically from it.
+        If not, a new instance will be created (only in memory).
         """
+        self.bookName,self.sheetName=bookName,sheetName
+        self.reset() # clear all columns
+        if pull: self.pull()
 
-        if pullBook in OR.bookNames() and pullSheet in OR.sheetNames(pullBook):
-            self.pull(pullBook,pullSheet)
-        else:
-            self.book=None
-            self.name=None
-            self.colNames=None
-            self.colDesc=None
-            self.colUnits=None
-            self.colComments=None
-            self.colTypes=None
-            self.data=None
-            print("ignoring inputs and creating a totally empty OR.SHEET")
+    def __repr__(self):
+        """controls what happens when you print() this class."""
+        return "PyOriginTools.SHEET [%s]%s (%d cols, %d rows)"%(\
+                self.bookName,self.sheetName,self.nCols,self.nRows)
 
-    def pull(self,bookName,sheetName):
+    def reset(self):
+        """clears all columns"""
+        self.colNames,self.colDesc,self.colUnits,self.colComments,\
+        self.colTypes,self.colData=[],[],[],[],[],[]
+
+    ### manipulating columns
+
+    def colAdd(self,name="",desc="",unit="",comment="",coltype=3,data=[],pos=None):
+        if pos is None:
+            pos=len(self.colNames)
+        self.colNames.insert(pos,name)
+        self.colDesc.insert(pos,desc)
+        self.colUnits.insert(pos,unit)
+        self.colComments.insert(pos,comment)
+        self.colTypes.insert(pos,coltype)
+        self.colData.insert(pos,data)
+        return
+
+    def wiggle(self,noiseLevel=.1):
+        """Slightly changes value of every cell in the worksheet. Used for testing."""
+        noise=(np.random.rand(*self.data.shape))-.5
+        self.data=self.data+noise*noiseLevel
+
+    ### interacting with origin
+
+    def pull(self,bookName=None,sheetName=None):
         """pull data into this OR.SHEET from a real book/sheet in Origin"""
+
+        # tons of validation
+        if bookName is None and self.bookName: bookName=self.bookName
+        if sheetName is None and self.sheetName: sheetName=self.sheetName
+        if bookName is None: bookName=OR.activeBook()
+        if bookName and sheetName is None: sheetName=OR.activeSheet()
+        if not bookName or not sheetName:
+            print("can't figure out where to pull from! [%s]%s"%(bookName,sheetName))
+            return
+
+        # finally doing the thing
         poSheet=OR.getSheet(bookName,sheetName)
-        self.book=bookName
-        self.name=poSheet.GetName()
+        self.bookName=bookName
+        self.sheetName=sheetName
+        self.desc=poSheet.GetLongName()
         self.colNames=[poCol.GetName() for poCol in poSheet.Columns()]
         self.colDesc=[poCol.GetLongName() for poCol in poSheet.Columns()]
         self.colUnits=[poCol.GetUnits() for poCol in poSheet.Columns()]
         self.colComments=[poCol.GetComments() for poCol in poSheet.Columns()]
         self.colTypes=[poCol.GetType() for poCol in poSheet.Columns()]
-        columnCount=len(self.colNames)
-        columnRows=max([x.GetUpperBound()+1 for x in poSheet.Columns()])
-        self.data=np.empty((columnRows,columnCount))
-        self.data[:]=np.nan # empty cells will be nan
-        for colNum,colData in enumerate([x.GetData() for x in poSheet.Columns()]):
-            self.data[:len(colData),colNum]=colData
-        print("[%s]%s yielded %d columns with %d rows (%d cells)"%(bookName,
-              sheetName,columnCount,columnRows,self.data.size,))
+        self.colData=[poCol.GetData() for poCol in poSheet.Columns()]
 
-    def push(self,bookName=None,sheetName=None):
+    def push(self,bookName=None,sheetName=None,overwrite=False):
         """pull this OR.SHEET into a real book/sheet in Origin"""
-        if bookName is None:
-            bookName=self.book
-        if sheetName is None:
-            sheetName=self.name
+        # tons of validation
+        if bookName: self.bookName=bookName
+        if sheetName: self.sheetName=sheetName
+        if not self.sheetName in OR.sheetNames(bookName):
+            print("can't find [%s]%s!"%(bookName,sheetName))
+            return
 
         # clear out out sheet by deleting EVERY column
         poSheet=OR.getSheet(bookName,sheetName) # CPyWorksheetPageI
+        if not poSheet:
+            print("WARNING: didn't get posheet",poSheet,bookName,sheetName)
         for poCol in [x for x in poSheet if x.IsValid()]:
             poCol.Destroy()
 
@@ -94,26 +112,67 @@ class SHEET:
             poSheet.Columns(i).SetUnits(self.colUnits[i])
             poSheet.Columns(i).SetComments(self.colComments[i])
             poSheet.Columns(i).SetType(self.colTypes[i])
-            poSheet.Columns(i).SetData(self.data[:,i])
+            poSheet.Columns(i).SetData(self.colData[i])
 
-def sheetPull(bookName=None,sheetName=None):
-    """intelligently pull a sheet. If book or name isn't given, the active ones
-    are used. If no book or sheet is selected, or if the sheet isn't in the book,
-    None is returned."""
-    if bookName is None:
-        bookName=OR.activeBook()
-    if not bookName or not bookName in OR.bookNames():
-        return None
-    if not sheetName:
-        sheetName=OR.activeSheet()
-    if not sheetName or not sheetName in OR.sheetNames(bookName):
-        return None
-    return SHEET(bookName,sheetName)
+    ### quick refs
+
+    @property
+    def nRows(self):
+        """returns maximum number of rows based on the longest colData"""
+        if self.nCols: return max([len(x) for x in self.colData])
+        else: return 0
+
+    @property
+    def nCols(self):
+        """returns number of columns in the sheet"""
+        return len(self.colNames)
+
+    ### managing data with numpy
+
+    @property
+    def data(self):
+        """return all of colData as a 2D numpy array."""
+        data=np.empty((self.nRows,self.nCols),dtype=np.float)
+        data[:]=np.nan # make everything nan by default
+        for colNum,colData in enumerate(self.colData):
+            for indexToBlank in [i for i in range(len(colData)) if not type(colData[i])==float]:
+                colData[indexToBlank]=None # make things None if they aren't float
+            data[:len(colData),colNum]=colData # only fill cells that have data
+        return data
+
+    @data.setter
+    def data(self,data):
+        """Given a 2D numpy array, fill colData with it."""
+        assert type(data) is np.ndarray
+        assert data.shape[1] == self.nCols
+        for i in range(self.nCols):
+            self.colData[i]=data[:,i].tolist()
 
 if __name__=="__main__":
+    print("\n"*10)
     t1=time.clock()
-    sheet=sheetPull() # pull a sheet's data
-    sheet.data=sheet.data*(.5+np.random.random()) # modify the data
-    sheet.push() # push it back in
+
+    sheet=SHEET(pull=True)
+    print(sheet.bookName)
+    sheet.wiggle()
+    sheet.push(overwrite=True)
+
+#    sheet=SHEET("demoBook","demoSheet",pull=False)
+#
+#
+#    sheet.colAdd(desc='exx',coltype=3,data=np.random.random_sample(np.random.randint(5,15)))
+#    sheet.colAdd(desc='why',coltype=0,data=np.random.random_sample(np.random.randint(5,15)))
+#
+#    print(sheet.data)
+
+#    sheet.colUnits[1]="cuz"
+#    sheet.colData[0]=np.array(sheet.colData[0]*1000,dtype=np.int)
+#    sheet.push("demoBook","demoSheetA",overwrite=True)
+
+#    sheet.colData[0]=np.array(sheet.colData[0]*1000,dtype=np.int)
+#    sheet.desc="newDesc"
+#    sheet.push("demoBook","demoSheetB",overwrite=True)
+#    sheet.push("demoBook2","lolz",overwrite=True)
+
     PyOrigin.LT_execute("doc -uw;")
     print("ELAPSED: %.02f ms"%((time.clock()-t1)*1000))

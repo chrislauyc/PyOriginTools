@@ -260,6 +260,65 @@ def sheetDelete(book=None,sheet=None):
         PyOrigin.WorksheetPages(book).Layers(sheetNames().index(sheet)).Destroy()
 
 
+def bookCreate(bookName=""):
+    """Create an empty workbook."""
+    poSheet=PyOrigin.CreatePage(2,bookName,"Origin",1)
+    return poSheet.GetName()
+    #sheetDeleteEmpty(bookName)
+
+def sheetDeleteEmpty(bookName=None):
+    """Delete all sheets which contain no data"""
+    if bookName is None:
+        bookName = activeBook()
+    if not bookName in bookNames():
+        print("can't clean up a book that doesn't exist:",bookName)
+        return
+    poBook=PyOrigin.WorksheetPages(bookName)
+    namesToKill=[]
+    for i,poSheet in enumerate([poSheet for poSheet in poBook.Layers()]):
+        poFirstCol=poSheet.Columns(0)
+        if poFirstCol.GetLongName()=="" and poFirstCol.GetData()==[]:
+            namesToKill.append(poSheet.GetName())
+    for sheetName in namesToKill:
+        print("deleting empty sheet",sheetName)
+        sheetDelete(bookName,sheetName)
+
+        #print(i,poFirstCol.GetLongName(),len(poFirstCol.GetData()))
+    #for i in enumerate([x.GetName() for x in poBook.Layers()])
+
+    #print("SHEET 1??:",PyOrigin.WorksheetPages(bookName).Layers(0).Destroy())
+    #PyOrigin.WorksheetPages(book).Layers(sheetNames().index(sheet)).Destroy()
+
+
+#def sheet1delete(bookName=None):
+#    """
+#    If the first sheet is Sheet1 and it's empty and there are more sheets,
+#    assume Sheet1 is unwanted and delete it!
+#    """
+#    if bookName is None:
+#        bookName = activeBook()
+#    if not bookName:
+#        print("can't delete Sheet1 without an active book or provided book name.")
+#        return
+#    if bookName in bookNames() and len(sheetNames(bookName))>1:
+#        #PyOrigin.Pages(bookName).AddLayer(sheetName)
+
+def sheetCreate(bookName=None,sheetName="",sheetDesc="",nSheets=0):
+    if bookName is None:
+        bookName = activeBook()
+    if not bookName:
+        print("can't create a sheet without an active book or provided book name.")
+        return
+    if bookName in bookNames():
+        poSheet=PyOrigin.Pages(bookName).AddLayer(sheetName)
+        poSheet.SetName(sheetName)
+        poSheet.SetLongName(sheetDesc)
+
+#        sheetsToDelete=len([x for x in poSheet])-1 # because we added a layer
+#        for i in range(sheetsToDelete):
+#            print("destroying layer")
+#            PyOrigin.WorksheetPages(bookName).Layers(0).Destroy()
+
 if __name__=="__main__":
     print("DO NOT RUN THIS SCRIPT DIRECTLY.")
     print("Version",PyOriginTools.__version__)

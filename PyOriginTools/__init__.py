@@ -17,3 +17,4 @@ print("PyOriginTools version:",PyOriginTools.__version__)
 from PyOriginTools.version import __version__
 
 from PyOriginTools.highlevel import *
+from PyOriginTools.workbook import *
