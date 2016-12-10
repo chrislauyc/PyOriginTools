@@ -46,7 +46,17 @@ class SHEET:
 
     ### manipulating columns
 
-    def colAdd(self,name="",desc="",unit="",comment="",coltype=3,data=[],pos=None):
+    def colAdd(self,name="",desc="",unit="",comment="",coltype=0,data=[],pos=None):
+        """
+        column types:
+            0: Y
+            1: Disregard
+            2: Y Error
+            3: X
+            4: Label
+            5: Z
+            6: X Error
+        """
         if pos is None:
             pos=len(self.colNames)
         self.colNames.insert(pos,name)
