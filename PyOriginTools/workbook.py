@@ -67,6 +67,26 @@ class SHEET:
         self.colData.insert(pos,data)
         return
 
+    def colDelete(self,colI=-1):
+        """delete a column at a single index. Negative numbers count from the end."""
+#        print("DELETING COLUMN: [%d] %s"%(colI,self.colDesc[colI]))
+        self.colNames.pop(colI)
+        self.colDesc.pop(colI)
+        self.colUnits.pop(colI)
+        self.colComments.pop(colI)
+        self.colTypes.pop(colI)
+        self.colData.pop(colI)
+        return
+
+    def onex(self):
+        """
+        delete all X columns except the first one.
+        """
+        xCols=[i for i in range(self.nCols) if self.colTypes[i]==3]
+        if len(xCols)>1:
+            for colI in xCols[1:][::-1]:
+                self.colDelete(colI)
+
     def wiggle(self,noiseLevel=.1):
         """Slightly changes value of every cell in the worksheet. Used for testing."""
         noise=(np.random.rand(*self.data.shape))-.5
