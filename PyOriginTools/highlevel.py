@@ -210,7 +210,7 @@ def sheetNames(book=None):
 
     """
     if book:
-        if not book in bookNames():
+        if not book.lower() in [x.lower() for x in bookNames()]:
             return False
     else:
         book=activeBook()
@@ -225,30 +225,34 @@ def getSheet(book=None,sheet=None):
     """returns the pyorigin object for a sheet."""
 
     # figure out what book to use
-    if book and not book in bookNames():
+    if book and not book.lower() in [x.lower() for x in bookNames()]:
         print("book %s doesn't exist"%book)
         return
     if book is None:
-        book=activeBook()
+        book=activeBook().lower()
     if book is None:
         print("no book given or selected")
         return
 
     # figure out what sheet to use
-    if sheet and not sheet in sheetNames(book):
+    if sheet and not sheet.lower() in [x.lower() for x in sheetNames(book)]:
         print("sheet %s doesn't exist"%sheet)
         return
     if sheet is None:
-        sheet=activeSheet()
+        sheet=activeSheet().lower()
     if sheet is None:
         return("no sheet given or selected")
         print
 
     # by now, we know the book/sheet exists and can be found
     for poSheet in PyOrigin.WorksheetPages(book).Layers():
-        if poSheet.GetName()==sheet:
+        if poSheet.GetName().lower()==sheet.lower():
             return poSheet
     return False
+
+def sheetSelect(book=None,sheet=None):
+    """focus on a book/sheet."""
+    PyOrigin.LT_execute('page.active$ = "%s";'%sheet) #TODO: remove labtalk!!
 
 def sheetDelete(book=None,sheet=None):
     """
@@ -270,7 +274,7 @@ def sheetDeleteEmpty(bookName=None):
     """Delete all sheets which contain no data"""
     if bookName is None:
         bookName = activeBook()
-    if not bookName in bookNames():
+    if not bookName.lower() in [x.lower() for x in bookNames()]:
         print("can't clean up a book that doesn't exist:",bookName)
         return
     poBook=PyOrigin.WorksheetPages(bookName)
