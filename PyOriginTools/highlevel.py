@@ -8,6 +8,9 @@ a project, etc.
 # PREPARE TO IMPORT INTELLIGENTLY
 import os
 import sys
+import pickle
+import time
+
 if not "../" in sys.path:
     sys.path.append('../') # this helps my IDE be happy
 newpath=os.path.abspath(os.path.dirname(os.path.dirname(sys.argv[0])))
@@ -263,7 +266,6 @@ def sheetDelete(book=None,sheet=None):
     if sheet in sheetNames():
         PyOrigin.WorksheetPages(book).Layers(sheetNames().index(sheet)).Destroy()
 
-
 def bookCreate(bookName=""):
     """Create an empty workbook."""
     poSheet=PyOrigin.CreatePage(2,bookName,"Origin",1)
@@ -287,26 +289,6 @@ def sheetDeleteEmpty(bookName=None):
         print("deleting empty sheet",sheetName)
         sheetDelete(bookName,sheetName)
 
-        #print(i,poFirstCol.GetLongName(),len(poFirstCol.GetData()))
-    #for i in enumerate([x.GetName() for x in poBook.Layers()])
-
-    #print("SHEET 1??:",PyOrigin.WorksheetPages(bookName).Layers(0).Destroy())
-    #PyOrigin.WorksheetPages(book).Layers(sheetNames().index(sheet)).Destroy()
-
-
-#def sheet1delete(bookName=None):
-#    """
-#    If the first sheet is Sheet1 and it's empty and there are more sheets,
-#    assume Sheet1 is unwanted and delete it!
-#    """
-#    if bookName is None:
-#        bookName = activeBook()
-#    if not bookName:
-#        print("can't delete Sheet1 without an active book or provided book name.")
-#        return
-#    if bookName in bookNames() and len(sheetNames(bookName))>1:
-#        #PyOrigin.Pages(bookName).AddLayer(sheetName)
-
 def sheetCreate(bookName=None,sheetName="",sheetDesc="",nSheets=0):
     if bookName is None:
         bookName = activeBook()
@@ -318,10 +300,19 @@ def sheetCreate(bookName=None,sheetName="",sheetDesc="",nSheets=0):
         poSheet.SetName(sheetName)
         poSheet.SetLongName(sheetDesc)
 
-#        sheetsToDelete=len([x for x in poSheet])-1 # because we added a layer
-#        for i in range(sheetsToDelete):
-#            print("destroying layer")
-#            PyOrigin.WorksheetPages(bookName).Layers(0).Destroy()
+def pickle_load(fname):
+    """return the contents of a pickle file"""
+    assert type(fname) is str and os.path.exists(fname)
+    print("loaded",fname)
+    return pickle.load(open(fname,"rb"))
+
+def pickle_save(thing,fname=None):
+    """save something to a pickle file"""
+    if fname is None:
+        fname=os.path.expanduser("~")+"/%d.pkl"%time.time()
+    assert type(fname) is str and os.path.isdir(os.path.dirname(fname))
+    pickle.dump(thing, open(fname,"wb"),pickle.HIGHEST_PROTOCOL)
+    print("saved",fname)
 
 if __name__=="__main__":
     print("DO NOT RUN THIS SCRIPT DIRECTLY.")

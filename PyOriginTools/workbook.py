@@ -165,9 +165,11 @@ class SHEET:
         data=np.empty((self.nRows,self.nCols),dtype=np.float)
         data[:]=np.nan # make everything nan by default
         for colNum,colData in enumerate(self.colData):
-            for indexToBlank in [i for i in range(len(colData)) if not type(colData[i])==float]:
-                colData[indexToBlank]=None # make things None if they aren't float
-            data[:len(colData),colNum]=colData # only fill cells that have data
+            validIs=np.where([np.isreal(v) for v in colData])[0]
+            validData=np.ones(len(colData))*np.nan
+            validData[validIs]=np.array(colData)[validIs]
+            data[:len(colData),colNum]=validData # only fill cells that have data
+
         return data
 
     @data.setter
