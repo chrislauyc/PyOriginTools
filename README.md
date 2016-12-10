@@ -54,5 +54,23 @@ The OriginLab website has a few web pages which document PyOrigin in action. I s
 
 http://pyorigin.swharden.com/PyOrigin-examples.html
 
+## Work with Origin Data _outside_ of Origin!
+This package provides `SHEET` and `BOOK` classes that make it easy to wrap everything about a worksheet or workbook up in a single object which can be saved (as a pickle) to the disk. Now you can save a workbook or a worksheet from Origin, and play with its data outside Origin. There is even a HTML worksheet viewer which renders `SHEET` objects just as they would be seen in Origin!
+
+**In an Origin session, we can save a worksheet to a file:**
+```python
+sheet=OR.SHEET() # pulls the active workbook/worksheet
+OR.pickle_save(sheet,"demoSheet.pkl")
+```
+
+**Now we can load it in any console or IDE, such as Spyder:**
+```python
+sheet=OR.pickle_load("demoSheet.pkl")
+sheet.colAdd(desc="demoCol",data=np.arange(15)**2)
+sheet.viewHTML()
+```
+**The output of `viewHTML()` automatically loads in your browser:**
+![](documentation/screenshots/fauxrigin.png)
+
 ## Useful Links
 * http://pyorigin.swharden.com/
