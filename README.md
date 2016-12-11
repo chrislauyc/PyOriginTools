@@ -27,8 +27,8 @@ print(data) # 2D numpy array of all column data
 ```
 ####  Task _with_ PyOriginTools
 ```python
-import PyOriginTools # <-- this module is what you're reading about!
-sheet=PyOriginTools.Sheet()
+import PyOriginTools as OR # <-- this module is what you're reading about!
+sheet=OR.Sheet()
 print(sheet.colNames)
 print(sheet.data)
 ```
