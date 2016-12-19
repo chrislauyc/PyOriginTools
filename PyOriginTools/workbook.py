@@ -87,6 +87,45 @@ class SHEET:
             for colI in xCols[1:][::-1]:
                 self.colDelete(colI)
 
+    def alignXY(self):
+        """aligns XY pairs (or XYYY etc) by X value."""
+
+        # figure out what data we have and will align to
+        xVals=[]
+        xCols=[x for x in range(self.nCols) if self.colTypes[x]==3]
+        yCols=[x for x in range(self.nCols) if self.colTypes[x]==0]
+        xCols,yCols=np.array(xCols),np.array(yCols)
+        for xCol in xCols:
+            xVals.extend(self.colData[xCol])
+        xVals=list(sorted(list(set(xVals))))
+
+        # prepare our new aligned dataset
+        newData=np.empty(len(xVals)*self.nCols)
+        newData[:]=np.nan
+        newData=newData.reshape(len(xVals),self.nCols)
+        oldData=self.data
+
+        # do the alignment
+        for xCol in xCols:
+            columnsToShift=[xCol]
+            for col in range(xCol+1,self.nCols):
+                if self.colTypes[col]==0:
+                    columnsToShift.append(col)
+                else:
+                    break
+            # determine how to move each row
+            for row in range(len(oldData)):
+                oldXvalue=oldData[row,xCol]
+                newRow=xVals.index(oldXvalue)
+                newData[newRow,columnsToShift]=oldData[row,columnsToShift]
+
+        # commit changes
+        newData[:,0]=xVals
+        self.data=newData
+        self.onex()
+
+
+
     def wiggle(self,noiseLevel=.1):
         """Slightly changes value of every cell in the worksheet. Used for testing."""
         noise=(np.random.rand(*self.data.shape))-.5
@@ -181,30 +220,10 @@ class SHEET:
             self.colData[i]=data[:,i].tolist()
 
 if __name__=="__main__":
-    print("\n"*10)
-    t1=time.clock()
-
-    sheet=SHEET(pull=True)
-    print(sheet.bookName)
-    sheet.wiggle()
-    sheet.push(overwrite=True)
-
-#    sheet=SHEET("demoBook","demoSheet",pull=False)
-#
-#
-#    sheet.colAdd(desc='exx',coltype=3,data=np.random.random_sample(np.random.randint(5,15)))
-#    sheet.colAdd(desc='why',coltype=0,data=np.random.random_sample(np.random.randint(5,15)))
-#
-#    print(sheet.data)
-
-#    sheet.colUnits[1]="cuz"
-#    sheet.colData[0]=np.array(sheet.colData[0]*1000,dtype=np.int)
-#    sheet.push("demoBook","demoSheetA",overwrite=True)
-
-#    sheet.colData[0]=np.array(sheet.colData[0]*1000,dtype=np.int)
-#    sheet.desc="newDesc"
-#    sheet.push("demoBook","demoSheetB",overwrite=True)
-#    sheet.push("demoBook2","lolz",overwrite=True)
-
-    PyOrigin.LT_execute("doc -uw;")
-    print("ELAPSED: %.02f ms"%((time.clock()-t1)*1000))
+    sheet=SHEET("demoBook","demoSheet",pull=False)
+    for i in range(1,10):
+        sheet.colAdd(desc='X%d'%i,coltype=3,data=np.arange(100)*i-10*i)
+        sheet.colAdd(desc='Y1%d'%i,coltype=0,data=np.arange(100)/10000)
+        sheet.colAdd(desc='Y2%d'%i,coltype=0,data=np.arange(100)/10000)
+    sheet.alignXY()
+    OR.sheetToHTML(sheet)
