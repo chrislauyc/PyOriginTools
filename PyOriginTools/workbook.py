@@ -97,13 +97,14 @@ class SHEET:
         xCols,yCols=np.array(xCols),np.array(yCols)
         for xCol in xCols:
             xVals.extend(self.colData[xCol])
+        #xVals=list(np.round(set(xVals),5))
         xVals=list(sorted(list(set(xVals))))
 
         # prepare our new aligned dataset
         newData=np.empty(len(xVals)*self.nCols)
         newData[:]=np.nan
         newData=newData.reshape(len(xVals),self.nCols)
-        oldData=self.data
+        oldData=np.round(self.data,5)
 
         # do the alignment
         for xCol in xCols:
@@ -116,8 +117,9 @@ class SHEET:
             # determine how to move each row
             for row in range(len(oldData)):
                 oldXvalue=oldData[row,xCol]
-                newRow=xVals.index(oldXvalue)
-                newData[newRow,columnsToShift]=oldData[row,columnsToShift]
+                if oldXvalue in xVals:
+                    newRow=xVals.index(oldXvalue)
+                    newData[newRow,columnsToShift]=oldData[row,columnsToShift]
 
         # commit changes
         newData[:,0]=xVals
