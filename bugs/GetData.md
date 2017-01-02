@@ -23,5 +23,6 @@ for i in range(100):
 ## hack-in solving the issue
 It seems that blank cells are what kills Origin. Running this once before GetData() is called solves this problem.
 ```python
-PyOrigin.LT_execute('wreplace find_value:="--" replace_str:=""')
+PyOrigin.LT_execute('wreplace find_value:="--" replace_str:="" lookin:=active_book')
 ```
+but this is *EXTREMELY* slow!
