@@ -1,6 +1,7 @@
-This bug causes Origin to have a HARD CRASH whenever GetData() is called from a column which has NANNUM values. It crashes around 3,000 reads and seems to be cumulative across python scripts.
+# Columns with many NANNUM cells crash GetData() 
+This bug causes Origin to have a HARD CRASH whenever PyOrigin's GetData() is called from a column which has NANNUM values. It crashes around 3,000 reads and seems to be cumulative across python scripts.
 
-# Recreating the Issue
+## Recreating the Issue
 **1.) In a fresh Origin, create a worksheet with a lot of data:**
 ```python
 sheetObject=PyOrigin.ActiveLayer()
@@ -19,7 +20,7 @@ for i in range(100):
     sheetObject.Columns(0).GetData()
 ```
 
-# hack-in solving the issue
+## hack-in solving the issue
 It seems that blank cells are what kills Origin. Running this once before GetData() is called solves this problem.
 ```python
 PyOrigin.LT_execute('wreplace find_value:="--" replace_str:=""')
