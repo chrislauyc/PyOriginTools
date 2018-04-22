@@ -15,13 +15,10 @@ setup(
     license='MIT License',
     platforms='any',
     description='tools to simplify interaction with OriginLab using PyOrigin',
-    long_description=open("README.md").readlines()[1],
+    long_description=open("README.rst").read(),
     install_requires=[
-       'swhlab>=0.1.113',
-       'webinspect>=0.2.8',
        'numpy>=1.8.1',
        'matplotlib>=1.3.1',
-       'swhlog>=0.1.4',
     ],
     classifiers=[
        'Programming Language :: Python :: 3',
